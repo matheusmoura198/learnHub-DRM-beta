@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="LearnHub DRM: plataforma da turma para organizar e consultar os conteúdos das disciplinas.">
+    <title>LearnHub DRM — os conteúdos da turma em um só lugar</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23000'/%3E%3Cpath d='M10 12h8a6 6 0 0 1 6 6v12a6 6 0 0 0-6-6h-8zm20 0h-2a6 6 0 0 0-6 6v12a6 6 0 0 1 6-6h2z' fill='none' stroke='%2360a5fa' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#inicio" aria-label="LearnHub DRM, início">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M4.5 8h7a5 5 0 0 1 5 5v13a5 5 0 0 0-5-5h-7V8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M27.5 8h-7a5 5 0 0 0-5 5v13a5 5 0 0 1 5-5h7V8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="16" cy="7" r="2" fill="currentColor"/>
+            </svg>
+          </span>
+          <span class="brand-name">LearnHub <span>DRM</span></span>
+        </a>
+        <nav class="main-nav" aria-label="Navegação principal">
+          <a href="#disciplinas">Disciplinas</a>
+          <a href="#funcionalidades">Funcionalidades</a>
+        </nav>
+        <a class="button button-small button-outline" href="#professores">Área do professor</a>
+      </div>
+    </header>
+
+    <main id="conteudo">
+      <section class="hero" id="inicio">
+        <div class="container hero-grid">
+          <div>
+            <span class="pill">Projeto da turma para alunos e professores</span>
+            <h1>Todo o conhecimento da sua turma em um só lugar.</h1>
+            <p class="hero-description">
+              Consulte as disciplinas, veja os assuntos de cada bimestre e saiba o que já foi
+              estudado e o que vem a seguir. Para consultar, não precisa de login.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#disciplinas">Ver disciplinas</a>
+              <a class="text-link" href="#funcionalidades">Como a plataforma ajuda</a>
+            </div>
+          </div>
+
+          <div class="preview" role="img" aria-label="Exemplo de como o aluno vê os conteúdos de uma disciplina">
+            <div class="preview-head">
+              <div>
+                <strong>Introdução à Programação</strong>
+                <small>Formação técnica, 1º ano</small>
+              </div>
+              <small>Exemplo</small>
+            </div>
+            <div class="preview-list">
+              <div class="preview-item"><span class="mini-status done">✓</span><span>Algoritmos e lógica</span><small>Concluído</small></div>
+              <div class="preview-item"><span class="mini-status current">↗</span><span>Fluxogramas</span><small>Em andamento</small></div>
+              <div class="preview-item"><span class="mini-status planned">○</span><span>Decisões no código</span><small>Planejado</small></div>
+            </div>
+            <p class="preview-note">Assim o aluno acompanha cada assunto.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="disciplinas">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <h2>Escolha uma disciplina</h2>
+              <p>Veja os assuntos organizados por bimestre.</p>
+            </div>
+            <div class="course-count"><strong id="course-count">0</strong><span>disciplinas</span></div>
+          </div>
+
+          <div class="filters" role="search" aria-label="Buscar disciplinas">
+            <label class="search-box">
+              <span class="search-icon" aria-hidden="true">⌕</span>
+              <span class="sr-only">Buscar por disciplina ou assunto</span>
+              <input id="search-input" type="search" placeholder="Buscar disciplina ou assunto" autocomplete="off">
+              <kbd>/</kbd>
+            </label>
+            <label class="select-wrap">
+              <span class="sr-only">Filtrar por categoria</span>
+              <select id="category-filter">
+                <option value="todas">Todas as categorias</option>
+                <option value="base">Base comum</option>
+                <option value="tecnica">Formação técnica</option>
+              </select>
+            </label>
+            <label class="select-wrap">
+              <span class="sr-only">Filtrar por série</span>
+              <select id="year-filter">
+                <option value="todas">Todas as séries</option>
+                <option value="1">1º ano</option>
+                <option value="2">2º ano</option>
+                <option value="3">3º ano</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="category-pills" aria-label="Filtro rápido por categoria">
+            <button class="filter-pill active" type="button" data-category="todas" aria-pressed="true">Todas</button>
+            <button class="filter-pill" type="button" data-category="base" aria-pressed="false">Base comum</button>
+            <button class="filter-pill" type="button" data-category="tecnica" aria-pressed="false">Formação técnica</button>
+          </div>
+
+          <div id="course-list" class="course-grid" aria-live="polite"></div>
+          <div id="empty-state" class="empty-state" hidden>
+            <span aria-hidden="true">⌕</span>
+            <h3>Nenhuma disciplina encontrada</h3>
+            <p>Tente outro termo ou ajuste os filtros.</p>
+            <button class="button button-outline" id="clear-filters" type="button">Limpar filtros</button>
+          </div>
+          <p class="demo-disclaimer">As disciplinas e os conteúdos abaixo são exemplos. A turma e os professores vão substituí-los pelos conteúdos reais.</p>
+        </div>
+      </section>
+
+      <section id="course-detail" class="course-detail-section" hidden>
+        <div class="container" id="course-detail-content"></div>
+      </section>
+
+      <section class="section" id="funcionalidades">
+        <div class="container">
+          <h2>Feito pela turma, para a turma</h2>
+          <p class="section-intro">
+            O LearnHub DRM reúne os conteúdos estudados ao longo do ano. Os professores organizam
+            os assuntos e os alunos consultam tudo em um único lugar, pelo celular ou pelo computador.
+          </p>
+          <div class="feature-grid">
+            <article class="feature">
+              <h3>Organização das disciplinas</h3>
+              <p>Cada disciplina mostra a formação e a série a que pertence.</p>
+            </article>
+            <article class="feature">
+              <h3>Consulta dos conteúdos</h3>
+              <p>Busque por assunto e filtre por categoria ou série.</p>
+            </article>
+            <article class="feature">
+              <h3>Organização por períodos</h3>
+              <p>Veja os assuntos de cada bimestre e se já foram estudados, estão em andamento ou virão depois.</p>
+            </article>
+            <article class="feature">
+              <h3>Materiais de estudo <span class="soon">Em breve</span></h3>
+              <p>PDFs, apresentações, vídeos e links junto de cada conteúdo.</p>
+            </article>
+            <article class="feature">
+              <h3>Área do professor <span class="soon">Em breve</span></h3>
+              <p>Cadastro, edição e publicação de conteúdos pelos professores.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="acesso">
+        <div class="container">
+          <h2>Por onde começar</h2>
+          <div class="access-grid">
+            <article class="access-card">
+              <h3>Sou aluno</h3>
+              <p>Consulte as disciplinas e os conteúdos publicados. Não precisa de login.</p>
+              <a class="button button-primary" href="#disciplinas">Ver disciplinas</a>
+            </article>
+            <article class="access-card" id="professores">
+              <h3>Sou professor</h3>
+              <p>A área de gerenciamento está em desenvolvimento. Login e permissões de verdade dependem de um servidor, por isso ainda não fazem parte desta versão.</p>
+              <span class="soon">Em desenvolvimento</span>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-main">
+          <a class="brand footer-brand" href="#inicio"><span class="brand-name">LearnHub <span>DRM</span></span></a>
+          <p>Projeto desenvolvido coletivamente pela nossa turma, para uso de alunos e professores da escola.</p>
+          <a href="#inicio">Voltar ao topo</a>
+        </div>
+        <p class="footer-note">As informações institucionais serão acrescentadas depois de confirmadas.</p>
+      </div>
+    </footer>
+  </body>
+</html>
